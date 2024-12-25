@@ -5,6 +5,7 @@ import ParticipantForm, { Participant } from '@/components/ParticipantForm'
 import WinnerDisplay from '@/components/WinnerDisplay'
 import { useState } from 'react'
 import { StepEnum } from './enum/StepEnum'
+import ParticipantAnimation from '@/components/ParticipantAnimation'
 
 export default function Home() {
     const [participants, setParticipants] = useState<Participant[]>([])
@@ -12,12 +13,26 @@ export default function Home() {
     const [step, setStep] = useState<StepEnum>(
         StepEnum.PARTICIPANT_NUMBER_CHOICE
     )
+    const [isAnimating, setIsAnimating] = useState<boolean>(false)
 
     const handleDraw = (winner: string) => {
-        setWinner(winner)
+        // setWinner(winner)
+        startAnimation()
     }
     const handleStep = (s: StepEnum) => {
         setStep(s)
+    }
+
+    const startAnimation = () => {
+        setIsAnimating(true)
+    }
+
+    const endAnimation = () => {
+        setIsAnimating(false)
+        const winner =
+            participants[Math.floor(Math.random() * participants.length)].name
+        // handleDraw(winner)
+        setWinner(winner)
     }
 
     return (
@@ -44,9 +59,18 @@ export default function Home() {
                 )}
 
                 {step === StepEnum.WINNER && (
-                    <div className='flex gap-4 items-center flex-col'>
-                        {winner && <WinnerDisplay winner={winner} />}
-                    </div>
+                    <>
+                        {isAnimating && (
+                            <ParticipantAnimation
+                                participants={participants.map((p) => p.name)}
+                                onAnimationEnd={endAnimation}
+                            />
+                        )}
+
+                        <div className='flex gap-4 items-center flex-col'>
+                            {winner && <WinnerDisplay winner={winner} />}
+                        </div>
+                    </>
                 )}
             </div>
         </div>
