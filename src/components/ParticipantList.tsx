@@ -13,17 +13,19 @@ const ParticipantList: React.FC<ParticipantListProps> = ({
     return (
         <>
             {participants.map((participant, index) => (
-                <div key={participant.id}>
-                    <label>
-                        Nom du participant {index + 1}:
-                        <input
-                            type='text'
-                            value={participant.name}
-                            onChange={(e) =>
-                                handleNameChange(index, e.target.value)
-                            }
-                        />
+                <div key={participant.id} className='flex flex-col gap-4'>
+                    <label htmlFor={`participant-${index + 1}`}>
+                        Nom n°{index + 1}:
                     </label>
+                    <input
+                        name={`participant-${index + 1}`}
+                        type='text'
+                        className='bg-slate-200 text-black'
+                        value={participant.name}
+                        onChange={(e) =>
+                            handleNameChange(index, e.target.value)
+                        }
+                    />
                 </div>
             ))}
         </>

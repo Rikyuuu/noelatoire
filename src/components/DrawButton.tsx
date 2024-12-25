@@ -3,14 +3,20 @@ import { Participant } from './ParticipantForm'
 export interface DrawButtonProps {
     participants: Participant[]
     onDraw: (winner: string) => void
+    handleStep: () => void
 }
 
-const DrawButton: React.FC<DrawButtonProps> = ({ participants, onDraw }) => {
+const DrawButton: React.FC<DrawButtonProps> = ({
+    participants,
+    onDraw,
+    handleStep,
+}) => {
     const handleDraw = () => {
         if (participants.length === 0) return
         const winner =
             participants[Math.floor(Math.random() * participants.length)].name
         onDraw(winner)
+        handleStep()
     }
 
     return (

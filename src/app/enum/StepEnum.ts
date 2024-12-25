@@ -1,0 +1,5 @@
+export enum StepEnum {
+    PARTICIPANT_NUMBER_CHOICE,
+    PARTICIPANT_NAME_INPUT,
+    WINNER,
+}
