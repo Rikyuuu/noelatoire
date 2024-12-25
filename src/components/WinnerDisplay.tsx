@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface WinnerDisplayProps {
     winner: string | null
 }
 
 const WinnerDisplay: React.FC<WinnerDisplayProps> = ({ winner }) => {
+    useEffect(() => {
+        const audio = new Audio('/sounds/christmas2.mp3')
+        audio.play()
+    }, [])
+
     return (
         <div className='winner-display'>
             {winner ? (

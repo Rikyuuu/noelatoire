@@ -15,8 +15,7 @@ export default function Home() {
     )
     const [isAnimating, setIsAnimating] = useState<boolean>(false)
 
-    const handleDraw = (winner: string) => {
-        // setWinner(winner)
+    const handleAnimation = () => {
         startAnimation()
     }
     const handleStep = (s: StepEnum) => {
@@ -27,11 +26,10 @@ export default function Home() {
         setIsAnimating(true)
     }
 
-    const endAnimation = () => {
+    const handleWinner = () => {
         setIsAnimating(false)
         const winner =
             participants[Math.floor(Math.random() * participants.length)].name
-        // handleDraw(winner)
         setWinner(winner)
     }
 
@@ -52,7 +50,7 @@ export default function Home() {
                     <div className='flex gap-4 items-center flex-col'>
                         <DrawButton
                             participants={participants}
-                            onDraw={handleDraw}
+                            onDraw={handleAnimation}
                             handleStep={() => handleStep(StepEnum.WINNER)}
                         />
                     </div>
@@ -63,7 +61,7 @@ export default function Home() {
                         {isAnimating && (
                             <ParticipantAnimation
                                 participants={participants.map((p) => p.name)}
-                                onAnimationEnd={endAnimation}
+                                onAnimationEnd={handleWinner}
                             />
                         )}
 
