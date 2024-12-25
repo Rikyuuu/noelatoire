@@ -42,21 +42,29 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor='participantNumber'>Nombre de participants</label>
-            <input
-                type='number'
-                name='participantNumber'
-                value={numParticipants}
-                onChange={handleNumParticipantsChange}
-                min='0'
-            />
+        <div>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor='participantNumber'>
+                    Nombre de participants
+                </label>
+                <input
+                    type='number'
+                    name='participantNumber'
+                    value={numParticipants}
+                    onChange={handleNumParticipantsChange}
+                    min='0'
+                    max='20'
+                />
+                <button type='submit' className='btn btn-neutral'>
+                    Valider
+                </button>
+            </form>
+
             <ParticipantList
                 participants={localParticipants}
                 handleNameChange={handleNameChange}
             />
-            <button type='submit'>Valider</button>
-        </form>
+        </div>
     )
 }
 
