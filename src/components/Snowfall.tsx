@@ -1,11 +1,13 @@
 import React, { useRef, useEffect } from 'react'
 
 const Snowfall = () => {
-    const canvasRef = useRef(null)
+    const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
         const canvas = canvasRef.current
+        if (!canvas) return
         const ctx = canvas.getContext('2d')
+        if (!ctx) return
 
         const width = (canvas.width = window.innerWidth)
         const height = (canvas.height = window.innerHeight)
