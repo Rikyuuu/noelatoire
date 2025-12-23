@@ -19,15 +19,15 @@ const ParticipantAnimation: React.FC<ParticipantAnimationProps> = ({
 
     useEffect(() => {
         let index = 0
-        let speed = 80 // vitesse initiale rapide
+        let speed = 120 // vitesse initiale
 
-        // Phase rapide (2 secondes)
+        // Phase rapide (1.5 secondes)
         intervalRef.current = setInterval(() => {
             setCurrentParticipant(participants[index])
             index = (index + 1) % participants.length
         }, speed)
 
-        // Transition vers phase lente après 2 secondes
+        // Transition vers phase lente après 1.5 secondes
         phaseTimeoutRef.current = setTimeout(() => {
             setAnimationPhase('slowing')
 
@@ -35,7 +35,7 @@ const ParticipantAnimation: React.FC<ParticipantAnimationProps> = ({
                 clearInterval(intervalRef.current)
             }
 
-            speed = 200 // ralentissement
+            speed = 300 // ralentissement plus doux
             intervalRef.current = setInterval(() => {
                 setCurrentParticipant(participants[index])
                 index = (index + 1) % participants.length
@@ -49,9 +49,9 @@ const ParticipantAnimation: React.FC<ParticipantAnimationProps> = ({
                     clearInterval(intervalRef.current)
                 }
 
-                speed = 500 // très lent
+                speed = 600 // très lent et doux
                 let finalSteps = 0
-                const maxFinalSteps = 5
+                const maxFinalSteps = 3 // moins d'étapes finales
 
                 intervalRef.current = setInterval(() => {
                     setCurrentParticipant(participants[index])
@@ -64,7 +64,7 @@ const ParticipantAnimation: React.FC<ParticipantAnimationProps> = ({
                     }
                 }, speed)
             }, 1000)
-        }, 2000)
+        }, 1500)
 
         return () => {
             if (intervalRef.current) {
@@ -79,11 +79,11 @@ const ParticipantAnimation: React.FC<ParticipantAnimationProps> = ({
     const getAnimationClasses = () => {
         switch (animationPhase) {
             case 'fast':
-                return 'animate-pulse scale-110'
+                return 'animate-modern-breathing'
             case 'slowing':
-                return 'animate-bounce scale-125'
+                return 'animate-subtle-border-glow'
             case 'final':
-                return 'animate-winner-celebration scale-150'
+                return 'animate-text-shimmer'
             default:
                 return ''
         }
@@ -105,37 +105,47 @@ const ParticipantAnimation: React.FC<ParticipantAnimationProps> = ({
     return (
         <div className='space-y-8 text-center'>
             {/* Indicateur de phase */}
-            <div className='flex justify-center items-center space-x-4'>
-                <div className='flex space-x-2'>
-                    {['fast', 'slowing', 'final'].map((phase) => (
+            <div className='flex justify-center items-center space-x-6'>
+                <div className='flex space-x-3'>
+                    {['fast', 'slowing', 'final'].map((phase, index) => (
                         <div
                             key={phase}
-                            className={`w-3 h-3 rounded-full transition-all duration-500 ${
-                                animationPhase === phase
-                                    ? 'bg-christmas-red scale-125'
-                                    : 'bg-gray-300 dark:bg-gray-600'
-                            }`}
-                        />
+                            className='flex flex-col items-center space-y-2'
+                        >
+                            <div
+                                className={`w-3 h-3 rounded-full transition-all duration-700 ${
+                                    animationPhase === phase
+                                        ? 'bg-blue-500 shadow-lg'
+                                        : 'bg-slate-300 dark:bg-slate-600'
+                                }`}
+                            />
+                            {animationPhase === phase && (
+                                <div className='w-8 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent animate-progress-flow rounded-full' />
+                            )}
+                        </div>
                     ))}
                 </div>
             </div>
 
             {/* Animation principale */}
-            <div
-                className={`transition-all duration-300 ${getAnimationClasses()}`}
-            >
-                <div className='bg-gradient-to-r from-christmas-red via-christmas-green to-christmas-gold p-8 rounded-3xl shadow-2xl'>
-                    <div className='space-y-4'>
-                        <div className='flex justify-center'>
+            <div className='transition-all duration-700'>
+                <div
+                    className={`bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-lg border-2 border-slate-200 dark:border-slate-700 card-modern ${getAnimationClasses()}`}
+                >
+                    <div className='space-y-6'>
+                        <div className='flex justify-center text-slate-600 dark:text-slate-400'>
                             {getPhaseIcon()}
                         </div>
 
-                        <h2 className='text-2xl md:text-4xl font-bold text-white'>
-                            Le gagnant est...
+                        <h2 className='text-xl md:text-2xl font-semibold text-slate-800 dark:text-slate-100'>
+                            Tirage en cours...
                         </h2>
 
-                        <div className='bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30'>
-                            <div className='text-3xl md:text-5xl font-black text-white min-h-[60px] flex items-center justify-center'>
+                        <div className='relative bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600 rounded-2xl p-6 border border-blue-100 dark:border-slate-600 overflow-hidden'>
+                            {animationPhase === 'fast' && (
+                                <div className='absolute inset-0 bg-gradient-to-r from-transparent via-blue-200/20 to-transparent animate-progress-flow' />
+                            )}
+                            <div className='relative text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100 min-h-[50px] flex items-center justify-center'>
                                 {currentParticipant || '...'}
                             </div>
                         </div>
@@ -143,22 +153,22 @@ const ParticipantAnimation: React.FC<ParticipantAnimationProps> = ({
                 </div>
             </div>
 
-            {/* Message d'encouragement selon la phase */}
-            <p className='text-lg md:text-xl text-gray-700 dark:text-gray-300 font-medium flex items-center justify-center gap-2'>
+            {/* Message selon la phase */}
+            <p className='text-base md:text-lg text-slate-600 dark:text-slate-400 font-medium flex items-center justify-center gap-2'>
                 {animationPhase === 'fast' && (
                     <>
-                        <RotateCcw className='animate-spin' size={20} /> Mélange
+                        <RotateCcw className='animate-spin' size={16} /> Mélange
                         des participants...
                     </>
                 )}
                 {animationPhase === 'slowing' && (
                     <>
-                        <Clock size={20} /> Le suspense monte...
+                        <Clock size={16} /> Le suspense monte...
                     </>
                 )}
                 {animationPhase === 'final' && (
                     <>
-                        <Target size={20} /> Et le gagnant est...
+                        <Target size={16} /> Et le gagnant est...
                     </>
                 )}
             </p>

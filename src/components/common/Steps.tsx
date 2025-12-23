@@ -101,15 +101,6 @@ const Steps = ({ currentStep }: StepsProps) => {
                     </div>
                 ))}
             </div>
-
-            {/* "Diviseur" decoratif */}
-            <div className='flex items-center my-8'>
-                <div className='flex-1 h-0.5 bg-gradient-to-r from-christmas-red via-christmas-green to-christmas-gold opacity-30'></div>
-                <div className='px-4 text-christmas-gold'>
-                    <Trophy size={24} />
-                </div>
-                <div className='flex-1 h-0.5 bg-gradient-to-l from-christmas-red via-christmas-green to-christmas-gold opacity-30'></div>
-            </div>
         </div>
     )
 }

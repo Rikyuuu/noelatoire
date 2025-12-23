@@ -4,17 +4,21 @@
 
 :root {
     --background: #ffffff;
-    --foreground: #171717;
-    --christmas-red: #dc2626;
-    --christmas-green: #059669;
+    --foreground: #1f2937;
+    --christmas-red: #e11d48;
+    --christmas-green: #10b981;
     --christmas-gold: #f59e0b;
-    --snow-white: #fef7f7;
+    --accent-blue: #3b82f6;
+    --soft-gray: #f8fafc;
+    --border-light: #e2e8f0;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
+        --background: #0f172a;
+        --foreground: #f1f5f9;
+        --soft-gray: #1e293b;
+        --border-light: #334155;
     }
 }
 
@@ -24,17 +28,70 @@ body {
     font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
 
-/* Animations personnalisées */
+/* Animations */
+@keyframes gentle-fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes modern-breathing {
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+    }
+    50% {
+        opacity: 0.95;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+    }
+}
+
+@keyframes progress-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes subtle-border-glow {
+    0%,
+    100% {
+        border-color: rgba(59, 130, 246, 0.3);
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+    50% {
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+}
+
+@keyframes text-shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
 @keyframes snowfall {
     0% {
         transform: translateY(-100vh) rotate(0deg);
         opacity: 0;
     }
     10% {
-        opacity: 1;
+        opacity: 0.8;
     }
     90% {
-        opacity: 1;
+        opacity: 0.8;
     }
     100% {
         transform: translateY(100vh) rotate(360deg);
@@ -42,56 +99,63 @@ body {
     }
 }
 
-@keyframes pulse-christmas {
-    0%,
-    100% {
-        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
-    }
+.animate-gentle-fade-in {
+    animation: gentle-fade-in 0.5s ease-out;
 }
-
-@keyframes winner-celebration {
-    0% {
-        transform: scale(1) rotate(0deg);
-    }
-    25% {
-        transform: scale(1.1) rotate(-5deg);
-    }
-    50% {
-        transform: scale(1.2) rotate(5deg);
-    }
-    75% {
-        transform: scale(1.1) rotate(-3deg);
-    }
-    100% {
-        transform: scale(1) rotate(0deg);
-    }
+.animate-modern-breathing {
+    animation: modern-breathing 3s ease-in-out infinite;
 }
-
+.animate-progress-flow {
+    animation: progress-flow 2s linear infinite;
+}
+.animate-subtle-border-glow {
+    animation: subtle-border-glow 2s ease-in-out infinite;
+}
+.animate-text-shimmer {
+    background: linear-gradient(
+        90deg,
+        currentColor 25%,
+        rgba(59, 130, 246, 0.8) 50%,
+        currentColor 75%
+    );
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: text-shimmer 3s ease-in-out infinite;
+}
 .animate-snowfall {
     animation: snowfall linear infinite;
 }
 
-.animate-pulse-christmas {
-    animation: pulse-christmas 2s infinite;
-}
-
-.animate-winner-celebration {
-    animation: winner-celebration 0.6s ease-in-out infinite;
-}
-
 /* Styles pour les composants */
-.glass-effect {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+.glass-modern {
+    background: rgba(248, 250, 252, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.3);
 }
 
-.christmas-shadow {
-    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.1),
-        0 10px 25px rgba(5, 150, 105, 0.1);
+@media (prefers-color-scheme: dark) {
+    .glass-modern {
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid rgba(51, 65, 85, 0.3);
+    }
+}
+
+.soft-shadow {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.card-modern {
+    background: white;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    .card-modern {
+        background: var(--soft-gray);
+        border: 1px solid var(--border-light);
+    }
 }
 
 /* Masquer les flèches des champs number */

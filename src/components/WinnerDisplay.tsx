@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { Crown, Trophy, RotateCcw, Share2, Sparkles, Gift } from 'lucide-react'
+import {
+    Crown,
+    Trophy,
+    RotateCcw,
+    Share2,
+    Gift,
+    StepForward,
+} from 'lucide-react'
 
 interface WinnerDisplayProps {
     winner: string | null
+    remainingParticipants?: number
+    onNewDrawWithoutWinner?: () => void
 }
 
-const WinnerDisplay: React.FC<WinnerDisplayProps> = ({ winner }) => {
+const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
+    winner,
+    remainingParticipants = 0,
+    onNewDrawWithoutWinner,
+}) => {
     const [showConfetti, setShowConfetti] = useState(false)
     const [animationClass, setAnimationClass] = useState('')
 
@@ -44,136 +57,116 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({ winner }) => {
 
     return (
         <div className='relative space-y-8'>
-            {/* Confettis animés */}
+            {/* Éléments décoratifs */}
             {showConfetti && (
                 <div className='absolute inset-0 pointer-events-none overflow-hidden'>
-                    {Array.from({ length: 50 }).map((_, i) => (
+                    {Array.from({ length: 20 }).map((_, i) => (
                         <div
                             key={i}
-                            className={`absolute animate-snowfall`}
+                            className={`absolute animate-gentle-fade-in`}
                             style={{
                                 left: `${Math.random() * 100}%`,
-                                animationDelay: `${Math.random() * 3}s`,
-                                animationDuration: `${2 + Math.random() * 3}s`,
+                                top: `${Math.random() * 100}%`,
+                                animationDelay: `${Math.random() * 2}s`,
+                                animationDuration: `${1 + Math.random() * 2}s`,
                             }}
                         >
-                            <span
-                                className={`text-2xl`}
+                            <div
+                                className={`w-2 h-2 rounded-full opacity-30`}
                                 style={{
-                                    color: [
-                                        '#dc2626',
-                                        '#059669',
-                                        '#f59e0b',
+                                    backgroundColor: [
                                         '#3b82f6',
                                         '#8b5cf6',
-                                    ][Math.floor(Math.random() * 5)],
+                                        '#10b981',
+                                        '#f59e0b',
+                                    ][Math.floor(Math.random() * 4)],
                                 }}
-                            >
-                                {
-                                    [
-                                        <Sparkles key='sparkles' />,
-                                        <Gift key='gift' />,
-                                        <Crown key='crown' />,
-                                        <Trophy key='trophy' />,
-                                    ][Math.floor(Math.random() * 4)]
-                                }
-                            </span>
+                            />
                         </div>
                     ))}
                 </div>
             )}
 
-            {/* Annonce principale du gagnant */}
+            {/* Annonce moderne du gagnant */}
             <div className={`relative z-10 ${animationClass}`}>
-                <div className='bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 p-1 rounded-3xl shadow-2xl'>
-                    <div className='bg-white dark:bg-gray-900 rounded-3xl p-8 md:p-12'>
-                        <div className='text-center space-y-6'>
-                            {/* Couronne et titre */}
-                            <div className='space-y-4'>
-                                <div className='flex justify-center'>
-                                    <Crown
-                                        className='text-yellow-500 animate-bounce'
-                                        size={80}
-                                    />
-                                </div>
-                                <h2 className='text-2xl md:text-4xl font-bold bg-gradient-to-r from-yellow-600 via-orange-600 to-red-600 bg-clip-text text-transparent flex items-center justify-center gap-2'>
-                                    <Trophy
-                                        className='text-yellow-600'
-                                        size={32}
-                                    />
-                                    FÉLICITATIONS !
-                                    <Trophy
-                                        className='text-yellow-600'
-                                        size={32}
-                                    />
-                                </h2>
-                            </div>
-
-                            {/* Le nom du gagnant */}
-                            <div className='space-y-3'>
-                                <p className='text-lg md:text-2xl text-gray-700 dark:text-gray-300 font-semibold'>
-                                    Le grand gagnant est :
-                                </p>
-
-                                <div className='bg-gradient-to-r from-christmas-green to-green-600 text-white p-6 md:p-8 rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-300 flex items-center justify-center gap-3'>
-                                    <Gift
-                                        className='text-christmas-red'
-                                        size={32}
-                                    />
-                                    <div className='text-3xl md:text-5xl font-black tracking-wide'>
-                                        {winner.toUpperCase()}
-                                    </div>
-                                    <Gift
-                                        className='text-christmas-red'
-                                        size={32}
-                                    />
+                <div className='bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-12 shadow-xl border border-slate-200 dark:border-slate-700'>
+                    <div className='text-center space-y-8'>
+                        {/* Icône et titre */}
+                        <div className='space-y-6'>
+                            <div className='flex justify-center'>
+                                <div className='bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-full shadow-lg'>
+                                    <Crown className='text-white' size={48} />
                                 </div>
                             </div>
+                            <h2 className='text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100 flex items-center justify-center gap-3'>
+                                <Trophy className='text-blue-500' size={24} />
+                                FÉLICITATIONS !
+                                <Trophy className='text-blue-500' size={24} />
+                            </h2>
+                        </div>
 
-                            {/* Messages de félicitations */}
-                            <div className='space-y-3 text-gray-600 dark:text-gray-400'>
-                                <p className='text-lg md:text-xl font-semibold flex items-center justify-center gap-2'>
-                                    <Gift className='text-red-500' size={24} />
-                                    Joyeux Noël !
-                                    <Gift
-                                        className='text-green-500'
-                                        size={24}
-                                    />
-                                </p>
-                                <p className='text-base md:text-lg flex items-center justify-center gap-1'>
-                                    Que la magie de Noël vous accompagne !
-                                    <Sparkles
-                                        className='text-yellow-500'
-                                        size={20}
-                                    />
-                                </p>
+                        {/* Le nom du gagnant */}
+                        <div className='space-y-4'>
+                            <p className='text-lg md:text-xl text-slate-600 dark:text-slate-300 font-medium'>
+                                Le grand gagnant est :
+                            </p>
+
+                            <div className='bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600 p-6 md:p-8 rounded-2xl border border-blue-200 dark:border-slate-600 shadow-sm'>
+                                <div className='text-2xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 tracking-wide flex items-center justify-center gap-3'>
+                                    <Gift className='text-blue-500' size={28} />
+                                    {winner.toUpperCase()}
+                                    <Gift className='text-blue-500' size={28} />
+                                </div>
                             </div>
+                        </div>
 
-                            {/* Boutons d'action */}
-                            <div className='flex flex-col sm:flex-row gap-4 justify-center pt-6'>
-                                <button
-                                    onClick={() => window.location.reload()}
-                                    className='px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-2'
-                                >
-                                    <RotateCcw size={20} />
-                                    Nouveau tirage
-                                </button>
+                        {/* Messages */}
+                        <div className='space-y-3 text-slate-600 dark:text-slate-400'>
+                            <p className='text-lg font-medium flex items-center justify-center gap-2'>
+                                <Gift className='text-red-500' size={20} />
+                                Joyeux Noël !
+                                <Gift className='text-green-500' size={20} />
+                            </p>
+                            <p className='text-base flex items-center justify-center gap-1'>
+                                Que la magie de Noël vous accompagne !
+                            </p>
+                        </div>
 
-                                <button
-                                    onClick={() => {
-                                        if (navigator.share) {
-                                            navigator.share({
-                                                title: 'Résultat du tirage de Noël',
-                                                text: `${winner} a gagné le tirage au sort de Noël !`,
-                                            })
-                                        }
-                                    }}
-                                    className='px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-2'
-                                >
-                                    <Share2 size={20} />
-                                    Partager
-                                </button>
-                            </div>
+                        {/* Boutons d'action */}
+                        <div className='flex flex-col sm:flex-row gap-4 justify-center pt-6'>
+                            <button
+                                onClick={() => window.location.reload()}
+                                className='px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'
+                            >
+                                <RotateCcw size={18} />
+                                Nouveau tirage
+                            </button>
+
+                            {onNewDrawWithoutWinner &&
+                                remainingParticipants > 1 && (
+                                    <button
+                                        onClick={onNewDrawWithoutWinner}
+                                        className='px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'
+                                    >
+                                        <StepForward size={18} />
+                                        Relancer le tirage sans {winner}
+                                    </button>
+                                )}
+
+                            <button
+                                onClick={() => {
+                                    if (navigator.share) {
+                                        navigator.share({
+                                            title: 'Résultat du tirage de Noël',
+                                            text: `${winner} a gagné le tirage au sort de Noël !`,
+                                        })
+                                    }
+                                }}
+                                className='px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'
+                            >
+                                <Share2 size={18} />
+                                Partager
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -14,12 +14,16 @@ interface ParticipantFormProps {
     participationStep: StepEnum
     setParticipants: (participants: Participant[]) => void
     handleStep: () => void
+    previousWinners?: string[]
+    isDrawingPhase?: boolean
 }
 
 const ParticipantForm: React.FC<ParticipantFormProps> = ({
     participationStep,
     setParticipants,
     handleStep,
+    previousWinners = [],
+    isDrawingPhase = false,
 }) => {
     const [numParticipants, setNumParticipants] = useState<number>(2)
     const [localParticipants, setLocalParticipants] = useState<Participant[]>([
@@ -142,15 +146,31 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({
                                 Saisissez les noms des participants
                             </h3>
                             <p className='text-gray-600 dark:text-gray-400'>
-                                Entrez le nom de chaque personne qui participera
-                                au tirage
+                                {isDrawingPhase
+                                    ? 'Tirage en cours - Les champs sont désactivés'
+                                    : 'Entrez le nom de chaque personne qui participera au tirage'}
                             </p>
+                            {previousWinners.length > 0 && (
+                                <div className='mt-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-700'>
+                                    <p className='text-sm text-green-700 dark:text-green-300'>
+                                        <strong>
+                                            {previousWinners.length > 1
+                                                ? 'Gagnants précédents'
+                                                : 'Gagnant précédent'}{' '}
+                                            :
+                                        </strong>{' '}
+                                        {previousWinners.join(', ')}
+                                    </p>
+                                </div>
+                            )}
                         </div>
 
                         <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
                             <ParticipantList
                                 participants={localParticipants}
                                 handleNameChange={handleNameChange}
+                                previousWinners={previousWinners}
+                                isDrawingPhase={isDrawingPhase}
                             />
                         </div>
                     </div>

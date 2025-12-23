@@ -40,68 +40,61 @@ const DrawButton: React.FC<DrawButtonProps> = ({
 
     return (
         <div className='space-y-6 text-center'>
-            {/* Information sur les participants valides */}
-            <div className='space-y-2'>
-                <p className='text-lg text-gray-700 dark:text-gray-300'>
-                    <span className='font-bold text-christmas-green'>
+            {/* Information sur les participants */}
+            <div className='space-y-3'>
+                <p className='text-lg text-slate-700 dark:text-slate-300'>
+                    <span className='font-bold text-blue-600 dark:text-blue-400'>
                         {validParticipants.length}
                     </span>{' '}
                     / <span className='font-bold'>{participants.length}</span>{' '}
                     participants remplis
                 </p>
                 {!allParticipantsFilled && participants.length > 0 && (
-                    <p className='text-sm text-amber-600 dark:text-amber-400 flex items-center gap-1 justify-center'>
+                    <p className='text-sm text-amber-600 dark:text-amber-400 flex items-center gap-2 justify-center bg-amber-50 dark:bg-amber-950/20 px-4 py-2 rounded-lg border border-amber-200 dark:border-amber-800'>
                         <AlertTriangle size={16} />
                         Veuillez remplir tous les noms avant de lancer le tirage
                     </p>
                 )}
                 {participants.length === 0 && (
-                    <p className='text-sm text-red-600 dark:text-red-400 flex items-center gap-1 justify-center'>
+                    <p className='text-sm text-red-600 dark:text-red-400 flex items-center gap-2 justify-center bg-red-50 dark:bg-red-950/20 px-4 py-2 rounded-lg border border-red-200 dark:border-red-800'>
                         <X size={16} />
                         Aucun participant configuré
                     </p>
                 )}
             </div>
 
-            {/* Bouton de tirage principal */}
+            {/* Bouton de tirage */}
             <button
                 onClick={handleDraw}
                 disabled={!canDraw || isDrawing}
                 className={`
-                    group relative px-8 py-4 text-xl font-bold rounded-2xl transition-all duration-300 transform
+                    relative px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 shadow-md min-w-[240px]
                     ${
                         canDraw && !isDrawing
-                            ? 'bg-gradient-to-r from-christmas-green to-green-600 hover:from-green-600 hover:to-green-700 text-white hover:scale-105 hover:shadow-xl cursor-pointer animate-pulse-christmas'
-                            : 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                            ? 'bg-blue-500 hover:bg-blue-600 text-white hover:shadow-lg'
+                            : 'bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 cursor-not-allowed'
                     }
-                    ${isDrawing ? 'animate-ping' : ''}
+                    ${isDrawing ? 'animate-modern-breathing' : ''}
                 `}
             >
-                <span className='relative z-10 flex items-center space-x-3'>
+                <span className='flex items-center justify-center space-x-3'>
                     {isDrawing && (
-                        <RotateCcw className='animate-spin' size={24} />
+                        <RotateCcw className='animate-spin' size={20} />
                     )}
                     <span>
-                        {isDrawing
-                            ? 'Tirage en cours...'
-                            : 'Lancer le tirage !'}
+                        {isDrawing ? 'Tirage en cours...' : 'Lancer le tirage'}
                     </span>
                 </span>
-
-                {/* Effet de brillance */}
-                {canDraw && !isDrawing && (
-                    <div className='absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 group-hover:animate-pulse'></div>
-                )}
             </button>
 
             {/* Instructions */}
             {allParticipantsFilled ? (
-                <p className='text-sm text-green-600 dark:text-green-400 max-w-md mx-auto flex items-center gap-1 justify-center'>
+                <p className='text-sm text-green-600 dark:text-green-400 max-w-md mx-auto px-4 py-2 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800'>
                     Tous les participants sont prêts ! Cliquez pour découvrir le
                     gagnant !
                 </p>
             ) : (
-                <p className='text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto'>
+                <p className='text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto'>
                     Remplissez tous les champs pour pouvoir lancer le tirage au
                     sort
                 </p>
