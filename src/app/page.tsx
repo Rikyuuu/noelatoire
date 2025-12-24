@@ -7,7 +7,8 @@ import { useState } from 'react'
 import { StepEnum } from './enum/StepEnum'
 import ParticipantAnimation from '@/components/ParticipantAnimation'
 import Snowfall from '@/components/Snowfall'
-import { Gift, TreePine } from 'lucide-react'
+import { TreePine, Globe, CandyCane, Snowflake, Gift } from 'lucide-react'
+import packageJson from '../../package.json'
 
 export default function Home() {
     const [participants, setParticipants] = useState<Participant[]>([])
@@ -82,26 +83,37 @@ export default function Home() {
     }
 
     return (
-        <div className='min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900'>
+        <div className='min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900'>
             {snowfall && <Snowfall />}
 
             <div className='container mx-auto px-6 py-12 relative z-10'>
                 {/* Header */}
                 <div className='text-center mb-16 animate-gentle-fade-in'>
-                    <div className='flex items-center justify-center gap-3 mb-6'>
-                        <div className='p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg'>
-                            <Gift className='text-white' size={32} />
-                        </div>
-                        <h1 className='text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-100'>
+                    <div className='mb-6'>
+                        <h1 className='text-5xl md:text-6xl font-bold bg-gradient-to-r from-slate-800 via-festive-accent to-slate-800 bg-clip-text text-transparent dark:from-slate-100 dark:via-festive-accent dark:to-slate-100'>
                             Noëlatoire
                         </h1>
-                        <div className='p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-lg'>
-                            <TreePine className='text-white' size={32} />
+                        <div className='mt-3 flex items-center justify-center gap-3'>
+                            <TreePine
+                                size={14}
+                                className='text-festive-accent animate-pulse'
+                            />
+                            <div className='w-8 h-px bg-gradient-to-r from-transparent via-festive-accent to-transparent'></div>
+                            <Snowflake
+                                className='text-festive-light'
+                                size={14}
+                            />
+                            <div className='w-8 h-px bg-gradient-to-r from-transparent via-festive-accent to-transparent'></div>
+                            <CandyCane
+                                size={14}
+                                className='text-festive-secondary animate-pulse'
+                                style={{ animationDelay: '1s' }}
+                            />
                         </div>
                     </div>
-                    <p className='text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed'>
-                        Organisez vos tirages au sort de Noël avec élégance et
-                        simplicité
+                    <p className='text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-medium'>
+                        Organisez facilement et rapidement vos tirages au sort
+                        de Noël
                     </p>
                 </div>
 
@@ -160,12 +172,59 @@ export default function Home() {
                 </div>
 
                 {/* Footer */}
-                <div className='text-center mt-16 text-slate-500 dark:text-slate-400'>
-                    <p className='text-sm flex items-center justify-center gap-1'>
-                        Joyeuses fêtes de fin d&apos;année !{' '}
-                        <TreePine size={16} className='text-green-500' />
-                    </p>
-                </div>
+                <footer className='mt-20 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 border-t border-slate-200 dark:border-slate-700'>
+                    <div className='max-w-4xl mx-auto px-6 py-6'>
+                        <div className='flex flex-col md:flex-row items-center justify-between gap-4 text-sm'>
+                            {/* Gauche - Infos développeur (je ne suis pas narcissique, promis) */}
+                            <div className='flex items-center gap-3 text-slate-600 dark:text-slate-400'>
+                                <div className='w-2 h-2 rounded-full bg-festive-accent'></div>
+                                <span>Développé par</span>
+                                <span className='font-semibold text-slate-800 dark:text-slate-200'>
+                                    Julien D.
+                                </span>
+                            </div>
+
+                            {/* Centre - Message de Noël */}
+                            <div className='flex items-center gap-3 text-center'>
+                                <Gift
+                                    size={18}
+                                    className='text-festive-secondary animate-pulse'
+                                />
+                                <span className='font-semibold text-lg'>
+                                    Joyeux Noël !
+                                </span>
+                                <Gift
+                                    size={18}
+                                    className='text-festive-secondary animate-pulse'
+                                    style={{ animationDelay: '1s' }}
+                                />
+                            </div>
+
+                            {/* Droite - Version et type */}
+                            <div className='flex items-center gap-4 text-slate-600 dark:text-slate-400'>
+                                <div className='flex items-center gap-2'>
+                                    <Globe size={14} />
+                                    <span className='text-xs'>Web</span>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <span className='text-xs'>Version</span>
+                                    <span className='font-mono text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 px-2 py-1 rounded shadow-sm'>
+                                        v{packageJson.version}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Copyright */}
+                        <div className='mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 text-center'>
+                            <p className='text-xs text-slate-500 dark:text-slate-500'>
+                                © 2024 - {new Date().getFullYear()} Noëlatoire -
+                                Organisateur de tirages au sort pour
+                                l&apos;ouverture des cadeaux Noël
+                            </p>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
     )

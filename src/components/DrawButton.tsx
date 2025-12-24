@@ -19,7 +19,16 @@ const DrawButton: React.FC<DrawButtonProps> = ({
     const allParticipantsFilled =
         participants.length > 0 &&
         validParticipants.length === participants.length
-    const canDraw = allParticipantsFilled && participants.length >= 2
+
+    // Vérification d'unicité des noms
+    const participantNames = validParticipants.map((p) =>
+        p.name.trim().toLowerCase()
+    )
+    const hasUniqueNames =
+        participantNames.length === new Set(participantNames).size
+
+    const canDraw =
+        allParticipantsFilled && participants.length >= 2 && hasUniqueNames
 
     const handleDraw = () => {
         if (!canDraw) return
@@ -55,6 +64,13 @@ const DrawButton: React.FC<DrawButtonProps> = ({
                         Veuillez remplir tous les noms avant de lancer le tirage
                     </p>
                 )}
+                {allParticipantsFilled && !hasUniqueNames && (
+                    <p className='text-sm text-red-600 dark:text-red-400 flex items-center gap-2 justify-center bg-red-50 dark:bg-red-950/20 px-4 py-2 rounded-lg border border-red-200 dark:border-red-800'>
+                        <X size={16} />
+                        Certains participants ont le même nom. Sinon, comment
+                        les différenceriez-vous ? 😉 😜
+                    </p>
+                )}
                 {participants.length === 0 && (
                     <p className='text-sm text-red-600 dark:text-red-400 flex items-center gap-2 justify-center bg-red-50 dark:bg-red-950/20 px-4 py-2 rounded-lg border border-red-200 dark:border-red-800'>
                         <X size={16} />
@@ -71,7 +87,7 @@ const DrawButton: React.FC<DrawButtonProps> = ({
                     relative px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 shadow-md min-w-[240px]
                     ${
                         canDraw && !isDrawing
-                            ? 'bg-blue-500 hover:bg-blue-600 text-white hover:shadow-lg'
+                            ? 'bg-festive-accent hover:bg-festive-accent-hover text-white hover:shadow-lg'
                             : 'bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 cursor-not-allowed'
                     }
                     ${isDrawing ? 'animate-modern-breathing' : ''}
@@ -88,15 +104,16 @@ const DrawButton: React.FC<DrawButtonProps> = ({
             </button>
 
             {/* Instructions */}
-            {allParticipantsFilled ? (
+            {allParticipantsFilled && hasUniqueNames ? (
                 <p className='text-sm text-green-600 dark:text-green-400 max-w-md mx-auto px-4 py-2 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800'>
                     Tous les participants sont prêts ! Cliquez pour découvrir le
                     gagnant !
                 </p>
             ) : (
                 <p className='text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto'>
-                    Remplissez tous les champs pour pouvoir lancer le tirage au
-                    sort
+                    {!allParticipantsFilled
+                        ? 'Remplissez tous les champs pour pouvoir lancer le tirage au sort'
+                        : 'Assurez-vous que chaque participant a un nom unique'}
                 </p>
             )}
         </div>

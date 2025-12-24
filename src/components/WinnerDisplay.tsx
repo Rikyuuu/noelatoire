@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import {
-    Crown,
     Trophy,
     RotateCcw,
     Share2,
     Gift,
     StepForward,
+    PackageOpen,
 } from 'lucide-react'
 
 interface WinnerDisplayProps {
@@ -75,10 +75,10 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
                                 className={`w-2 h-2 rounded-full opacity-30`}
                                 style={{
                                     backgroundColor: [
-                                        '#3b82f6',
-                                        '#8b5cf6',
-                                        '#10b981',
-                                        '#f59e0b',
+                                        '#10b981', // festive-emerald
+                                        '#334155', // modern-slate
+                                        '#e11d48', // festive-ruby
+                                        '#64748b', // modern-slate-light
                                     ][Math.floor(Math.random() * 4)],
                                 }}
                             />
@@ -94,28 +94,24 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
                         {/* Icône et titre */}
                         <div className='space-y-6'>
                             <div className='flex justify-center'>
-                                <div className='bg-gradient-to-br from-blue-500 to-indigo-600 p-6 rounded-full shadow-lg'>
-                                    <Crown className='text-white' size={48} />
+                                <div className='bg-festive-accent p-6 rounded-full shadow-lg'>
+                                    <Gift className='text-white' size={48} />
                                 </div>
                             </div>
                             <h2 className='text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100 flex items-center justify-center gap-3'>
-                                <Trophy className='text-blue-500' size={24} />
                                 FÉLICITATIONS !
-                                <Trophy className='text-blue-500' size={24} />
                             </h2>
                         </div>
 
                         {/* Le nom du gagnant */}
                         <div className='space-y-4'>
                             <p className='text-lg md:text-xl text-slate-600 dark:text-slate-300 font-medium'>
-                                Le grand gagnant est :
+                                Le grand gagnant est
                             </p>
 
-                            <div className='bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600 p-6 md:p-8 rounded-2xl border border-blue-200 dark:border-slate-600 shadow-sm'>
+                            <div className='bg-gradient-to-br from-red-50 to-green-50 dark:from-red-950/20 dark:to-green-950/20 p-6 md:p-8 rounded-2xl border border-festive-accent/30 dark:border-slate-600 shadow-sm'>
                                 <div className='text-2xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 tracking-wide flex items-center justify-center gap-3'>
-                                    <Gift className='text-blue-500' size={28} />
                                     {winner.toUpperCase()}
-                                    <Gift className='text-blue-500' size={28} />
                                 </div>
                             </div>
                         </div>
@@ -123,12 +119,15 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
                         {/* Messages */}
                         <div className='space-y-3 text-slate-600 dark:text-slate-400'>
                             <p className='text-lg font-medium flex items-center justify-center gap-2'>
-                                <Gift className='text-red-500' size={20} />
-                                Joyeux Noël !
-                                <Gift className='text-green-500' size={20} />
-                            </p>
-                            <p className='text-base flex items-center justify-center gap-1'>
-                                Que la magie de Noël vous accompagne !
+                                <PackageOpen
+                                    className='text-festive-accent'
+                                    size={20}
+                                />
+                                Tu peux ouvrir tes cadeaux !
+                                <PackageOpen
+                                    className='text-festive-accent'
+                                    size={20}
+                                />
                             </p>
                         </div>
 
@@ -136,7 +135,7 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
                         <div className='flex flex-col sm:flex-row gap-4 justify-center pt-6'>
                             <button
                                 onClick={() => window.location.reload()}
-                                className='px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'
+                                className='px-6 py-3 bg-festive-secondary hover:bg-festive-secondary-hover text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'
                             >
                                 <RotateCcw size={18} />
                                 Nouveau tirage
@@ -146,10 +145,10 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
                                 remainingParticipants > 1 && (
                                     <button
                                         onClick={onNewDrawWithoutWinner}
-                                        className='px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'
+                                        className='px-6 py-3 bg-modern-primary hover:bg-modern-primary-hover text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'
                                     >
                                         <StepForward size={18} />
-                                        Relancer le tirage sans {winner}
+                                        Poursuivre les tirages
                                     </button>
                                 )}
 
@@ -162,7 +161,7 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
                                         })
                                     }
                                 }}
-                                className='px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'
+                                className='px-6 py-3 bg-festive-accent hover:bg-festive-accent-hover text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2'
                             >
                                 <Share2 size={18} />
                                 Partager

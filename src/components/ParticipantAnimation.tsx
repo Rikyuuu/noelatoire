@@ -115,12 +115,12 @@ const ParticipantAnimation: React.FC<ParticipantAnimationProps> = ({
                             <div
                                 className={`w-3 h-3 rounded-full transition-all duration-700 ${
                                     animationPhase === phase
-                                        ? 'bg-blue-500 shadow-lg'
+                                        ? 'bg-festive-accent shadow-lg'
                                         : 'bg-slate-300 dark:bg-slate-600'
                                 }`}
                             />
                             {animationPhase === phase && (
-                                <div className='w-8 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent animate-progress-flow rounded-full' />
+                                <div className='w-8 h-1 bg-elegant-festive animate-progress-flow rounded-full' />
                             )}
                         </div>
                     ))}
@@ -141,9 +141,9 @@ const ParticipantAnimation: React.FC<ParticipantAnimationProps> = ({
                             Tirage en cours...
                         </h2>
 
-                        <div className='relative bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600 rounded-2xl p-6 border border-blue-100 dark:border-slate-600 overflow-hidden'>
+                        <div className='relative bg-gradient-to-br from-slate-50 to-slate-100/50 dark:from-slate-800/50 dark:to-slate-700/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-600 overflow-hidden'>
                             {animationPhase === 'fast' && (
-                                <div className='absolute inset-0 bg-gradient-to-r from-transparent via-blue-200/20 to-transparent animate-progress-flow' />
+                                <div className='absolute inset-0 bg-elegant-festive opacity-5 animate-progress-flow' />
                             )}
                             <div className='relative text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-100 min-h-[50px] flex items-center justify-center'>
                                 {currentParticipant || '...'}

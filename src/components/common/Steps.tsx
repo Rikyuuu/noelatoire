@@ -54,9 +54,9 @@ const Steps = ({ currentStep }: StepsProps) => {
                                     transition-all duration-500 ease-in-out
                                     ${
                                         isStepCompleted(step.key)
-                                            ? 'bg-christmas-green text-white shadow-lg animate-pulse-christmas'
+                                            ? 'bg-festive-accent text-white shadow-lg'
                                             : isStepCurrent(step.key)
-                                            ? 'bg-christmas-red text-white shadow-festive transform scale-110'
+                                            ? 'bg-festive-secondary text-white shadow-md transform scale-110 animate-pulse'
                                             : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                                     }
                                 `}
@@ -71,7 +71,7 @@ const Steps = ({ currentStep }: StepsProps) => {
                                 <div
                                     className={`text-sm font-medium ${
                                         isStepCurrent(step.key)
-                                            ? 'text-christmas-red'
+                                            ? 'text-festive-secondary'
                                             : 'text-gray-600 dark:text-gray-400'
                                     }`}
                                 >
@@ -91,7 +91,7 @@ const Steps = ({ currentStep }: StepsProps) => {
                                         h-full transition-all duration-500
                                         ${
                                             isStepCompleted(step.key)
-                                                ? 'bg-christmas-green'
+                                                ? 'bg-festive-accent'
                                                 : 'bg-gray-200 dark:bg-gray-700'
                                         }
                                     `}

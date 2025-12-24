@@ -1,12 +1,13 @@
 import React from 'react'
 import { Participant } from './ParticipantForm'
-import { User, CheckCircle, Crown, Lock, PartyPopper } from 'lucide-react'
+import { User, CheckCircle, Crown, Lock, PartyPopper, X } from 'lucide-react'
 
 interface ParticipantListProps {
     participants: Participant[]
     handleNameChange: (index: number, name: string) => void
     previousWinners?: string[]
     isDrawingPhase?: boolean
+    duplicateNames?: string[]
 }
 
 const ParticipantList: React.FC<ParticipantListProps> = ({
@@ -14,12 +15,18 @@ const ParticipantList: React.FC<ParticipantListProps> = ({
     handleNameChange,
     previousWinners = [],
     isDrawingPhase = false,
+    duplicateNames = [],
 }) => {
     return (
         <>
             {participants.map((participant, index) => {
                 const isWinner = previousWinners.includes(participant.name)
                 const isDisabled = isDrawingPhase
+                const hasDuplicate =
+                    participant.name.trim() !== '' &&
+                    duplicateNames.includes(
+                        participant.name.trim().toLowerCase()
+                    )
 
                 return (
                     <div
@@ -42,7 +49,7 @@ const ParticipantList: React.FC<ParticipantListProps> = ({
                                         ? 'bg-green-500'
                                         : isDisabled
                                         ? 'bg-gray-500'
-                                        : 'bg-christmas-red'
+                                        : 'bg-festive-secondary'
                                 }`}
                             >
                                 {index + 1}
@@ -69,7 +76,7 @@ const ParticipantList: React.FC<ParticipantListProps> = ({
                                         ? 'bg-green-50 dark:bg-green-900/30 border-2 border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 font-semibold'
                                         : isDisabled
                                         ? 'bg-gray-100 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-                                        : 'bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 focus:ring-4 focus:ring-christmas-green/20 focus:border-christmas-green'
+                                        : 'bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 focus:ring-4 focus:ring-festive-accent/20 focus:border-festive-accent'
                                 } placeholder-gray-400 dark:placeholder-gray-500`}
                                 placeholder={
                                     isDisabled
@@ -90,9 +97,11 @@ const ParticipantList: React.FC<ParticipantListProps> = ({
                                     />
                                 ) : isDisabled ? (
                                     <Lock className='text-gray-400' size={20} />
+                                ) : hasDuplicate ? (
+                                    <X className='text-red-500' size={20} />
                                 ) : participant.name ? (
                                     <CheckCircle
-                                        className='text-christmas-green'
+                                        className='text-festive-accent'
                                         size={20}
                                     />
                                 ) : (

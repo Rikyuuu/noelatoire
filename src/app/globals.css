@@ -5,12 +5,40 @@
 :root {
     --background: #ffffff;
     --foreground: #1f2937;
-    --christmas-red: #e11d48;
-    --christmas-green: #10b981;
-    --christmas-gold: #f59e0b;
-    --accent-blue: #3b82f6;
-    --soft-gray: #f8fafc;
-    --border-light: #e2e8f0;
+
+    /* Palette */
+    --modern-slate: #334155;
+    --modern-slate-light: #64748b;
+    --modern-slate-dark: #1e293b;
+
+    --festive-emerald: #10b981; /* Vert sapin modern */
+    --festive-ruby: #e11d48; /* Rouge Noël élégant */
+    --festive-gold: #f59e0b; /* Or discret */
+    --festive-pearl: #f8fafc; /* Blanc nacré */
+
+    /* Couleurs principales (design system moderne) */
+    --primary: var(--modern-slate);
+    --primary-hover: var(--modern-slate-dark);
+    --primary-light: #f1f5f9;
+    --primary-soft: #e2e8f0;
+
+    --accent: var(--festive-emerald);
+    --accent-hover: #059669;
+    --accent-light: #d1fae5;
+    --accent-soft: #a7f3d0;
+
+    --secondary: var(--festive-ruby);
+    --secondary-hover: #be185d;
+    --secondary-light: #fce7f3;
+    --secondary-soft: #fbcfe8;
+
+    /* Couleurs neutres */
+    --neutral: var(--modern-slate-light);
+    --neutral-light: #e2e8f0;
+    --neutral-dark: var(--modern-slate-dark);
+
+    --soft-gray: var(--festive-pearl);
+    --border-light: var(--neutral-light);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,6 +47,12 @@
         --foreground: #f1f5f9;
         --soft-gray: #1e293b;
         --border-light: #334155;
+
+        /* Adaptations pour le mode sombre */
+        --primary-light: #7f1d1d;
+        --secondary-light: #064e3b;
+        --accent-light: #78350f;
+        --neutral-light: #334155;
     }
 }
 
@@ -44,11 +78,11 @@ body {
     0%,
     100% {
         opacity: 1;
-        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+        box-shadow: 0 4px 20px rgba(51, 65, 85, 0.08);
     }
     50% {
         opacity: 0.95;
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+        box-shadow: 0 8px 25px rgba(51, 65, 85, 0.12);
     }
 }
 
@@ -64,12 +98,12 @@ body {
 @keyframes subtle-border-glow {
     0%,
     100% {
-        border-color: rgba(59, 130, 246, 0.3);
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+        border-color: rgba(16, 185, 129, 0.3);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
     }
     50% {
-        border-color: rgba(59, 130, 246, 0.5);
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        border-color: rgba(16, 185, 129, 0.5);
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
     }
 }
 
@@ -115,7 +149,7 @@ body {
     background: linear-gradient(
         90deg,
         currentColor 25%,
-        rgba(59, 130, 246, 0.8) 50%,
+        var(--primary) 50%,
         currentColor 75%
     );
     background-size: 200% 100%;
@@ -167,4 +201,71 @@ body {
 
 .no-spinners[type='number'] {
     -moz-appearance: textfield;
+}
+
+/* Classes utilitaires pour design moderne avec touches festives */
+.bg-modern-primary {
+    background-color: var(--primary);
+}
+.bg-modern-primary-hover:hover {
+    background-color: var(--primary-hover);
+}
+.bg-modern-primary-light {
+    background-color: var(--primary-light);
+}
+.bg-modern-primary-soft {
+    background-color: var(--primary-soft);
+}
+
+.bg-festive-accent {
+    background-color: var(--accent);
+}
+.bg-festive-accent-hover:hover {
+    background-color: var(--accent-hover);
+}
+.bg-festive-accent-light {
+    background-color: var(--accent-light);
+}
+.bg-festive-accent-soft {
+    background-color: var(--accent-soft);
+}
+
+.bg-festive-secondary {
+    background-color: var(--secondary);
+}
+.bg-festive-secondary-hover:hover {
+    background-color: var(--secondary-hover);
+}
+.bg-festive-secondary-light {
+    background-color: var(--secondary-light);
+}
+
+.text-modern-primary {
+    color: var(--primary);
+}
+.text-festive-accent {
+    color: var(--accent);
+}
+.text-festive-secondary {
+    color: var(--secondary);
+}
+
+.border-modern-primary {
+    border-color: var(--primary);
+}
+.border-festive-accent {
+    border-color: var(--accent);
+}
+
+/* Gradient moderne et élégant */
+.bg-elegant-festive {
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+}
+
+.bg-subtle-festive {
+    background: linear-gradient(
+        135deg,
+        var(--accent-light),
+        var(--primary-light)
+    );
 }
