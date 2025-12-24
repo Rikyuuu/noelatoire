@@ -20,6 +20,7 @@ export default function Home() {
     const [snowfall, setSnowfall] = useState<boolean>(false)
     const [previousWinners, setPreviousWinners] = useState<string[]>([])
     const [isDrawingPhase, setIsDrawingPhase] = useState<boolean>(false)
+    const [easterEggEnabled, setEasterEggEnabled] = useState<boolean>(true)
 
     const handleAnimation = () => {
         setIsDrawingPhase(true)
@@ -133,14 +134,36 @@ export default function Home() {
                         />
 
                         {step === StepEnum.PARTICIPANT_NAME_INPUT && (
-                            <div className='flex justify-center'>
-                                <DrawButton
-                                    participants={participants}
-                                    onDraw={handleAnimation}
-                                    handleStep={() =>
-                                        handleStep(StepEnum.WINNER)
-                                    }
-                                />
+                            <div className='space-y-6'>
+                                {/* Case à cocher Easter egg */}
+                                <div className='flex justify-center'>
+                                    <label className='flex items-center gap-3 cursor-pointer group'>
+                                        <input
+                                            type='checkbox'
+                                            checked={easterEggEnabled}
+                                            onChange={(e) =>
+                                                setEasterEggEnabled(
+                                                    e.target.checked
+                                                )
+                                            }
+                                            className='w-5 h-5 text-festive-accent bg-white border-2 border-slate-300 rounded focus:ring-festive-accent focus:ring-2 dark:bg-slate-700 dark:border-slate-600'
+                                        />
+                                        <div className='text-slate-700 dark:text-slate-300 font-medium group-hover:text-festive-accent transition-colors flex items-center'>
+                                            <Gift className='inline-block mr-2 text-festive-accent' />{' '}
+                                            <div>Easter egg sonore</div>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div className='flex justify-center'>
+                                    <DrawButton
+                                        participants={participants}
+                                        onDraw={handleAnimation}
+                                        handleStep={() =>
+                                            handleStep(StepEnum.WINNER)
+                                        }
+                                    />
+                                </div>
                             </div>
                         )}
 
@@ -164,6 +187,11 @@ export default function Home() {
                                         onNewDrawWithoutWinner={
                                             handleNewDrawWithoutWinner
                                         }
+                                        participants={participants.map(
+                                            (p) => p.name
+                                        )}
+                                        previousWinners={previousWinners}
+                                        easterEggEnabled={easterEggEnabled}
                                     />
                                 )}
                             </div>

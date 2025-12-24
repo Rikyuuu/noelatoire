@@ -12,25 +12,136 @@ interface WinnerDisplayProps {
     winner: string | null
     remainingParticipants?: number
     onNewDrawWithoutWinner?: () => void
+    participants?: string[]
+    previousWinners?: string[]
+    easterEggEnabled?: boolean
 }
 
 const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
     winner,
     remainingParticipants = 0,
     onNewDrawWithoutWinner,
+    participants = [],
+    previousWinners = [],
+    easterEggEnabled = true,
 }) => {
     const [showConfetti, setShowConfetti] = useState(false)
     const [animationClass, setAnimationClass] = useState('')
 
     useEffect(() => {
-        // Lecture audio
-        try {
-            const audio = new Audio('/sounds/christmas2.mp3')
-            audio.volume = 0.5
-            audio.play().catch(console.warn)
-        } catch (error) {
-            console.warn('Impossible de lire le son:', error)
+        // Easter egg pour Aurélie et Manon
+        const getAudioFile = () => {
+            if (!winner) return '/sounds/christmas2.mp3'
+
+            // Combine tous les participants (actuels + gagnants précédents) pour détecter l'easter egg
+            const allParticipants = [...participants, ...previousWinners]
+
+            // Vérifier si Aurélie et Manon sont dans l'ensemble des participants (avec ou sans accent)
+            const hasAurelie = allParticipants.some(
+                (p) =>
+                    p.toLowerCase().includes('aurélie') ||
+                    p.toLowerCase().includes('aurelie') ||
+                    p.toLowerCase().includes('elie')
+            )
+            const hasManon = allParticipants.some((p) =>
+                p.toLowerCase().includes('manon')
+            )
+
+            // Si c'est Aurélie, Manon, ou le dernier participant et que l'easter egg est activé
+            if (hasAurelie && hasManon && easterEggEnabled) {
+                // Vérifie si c'est le dernier participant
+                if (remainingParticipants === 1) {
+                    const isWinnerAurelie =
+                        winner.toLowerCase().includes('aurélie') ||
+                        winner.toLowerCase().includes('aurelie') ||
+                        winner.toLowerCase().includes('elie')
+                    const isWinnerManon = winner.toLowerCase().includes('manon')
+
+                    if (isWinnerAurelie) {
+                        // Joue d'abord le son d'Aurélie, puis ChristmasAll
+                        return '/sounds/ChristmasAurelie.mp3'
+                    }
+                    if (isWinnerManon) {
+                        // Joue d'abord le son de Manon, puis ChristmasAll
+                        return '/sounds/ChristmasManon.mp3'
+                    }
+                    // Si le dernier n'est ni Aurélie ni Manon, joue directement ChristmasAll
+                    return '/sounds/ChristmasAll.mp3'
+                }
+
+                // Easter egg activé pour les tirages d'Aurélie ou de Manon !
+                if (
+                    winner.toLowerCase().includes('aurélie') ||
+                    winner.toLowerCase().includes('aurelie') ||
+                    winner.toLowerCase().includes('elie')
+                ) {
+                    return '/sounds/ChristmasAurelie.mp3'
+                }
+                if (winner.toLowerCase().includes('manon')) {
+                    return '/sounds/ChristmasManon.mp3'
+                }
+            }
+
+            // Son par défaut
+            return '/sounds/christmas2.mp3'
         }
+
+        const playSequentialAudio = async () => {
+            const audioFile = getAudioFile()
+
+            try {
+                const audio = new Audio(audioFile)
+                audio.volume = 0.5
+                await audio.play()
+
+                // Si c'est le dernier participant ET si c'est Aurélie ou Manon, joue ChristmasAll après
+                if (
+                    remainingParticipants === 1 &&
+                    audioFile !== '/sounds/ChristmasAll.mp3'
+                ) {
+                    const allParticipants = [
+                        ...participants,
+                        ...previousWinners,
+                    ]
+                    const hasAurelie = allParticipants.some(
+                        (p) =>
+                            p.toLowerCase().includes('aurélie') ||
+                            p.toLowerCase().includes('aurelie') ||
+                            p.toLowerCase().includes('elie')
+                    )
+                    const hasManon = allParticipants.some((p) =>
+                        p.toLowerCase().includes('manon')
+                    )
+
+                    if (hasAurelie && hasManon && easterEggEnabled) {
+                        const isWinnerAurelie =
+                            winner?.toLowerCase().includes('aurélie') ||
+                            winner?.toLowerCase().includes('aurelie') ||
+                            winner?.toLowerCase().includes('elie')
+                        const isWinnerManon = winner
+                            ?.toLowerCase()
+                            .includes('manon')
+
+                        if (isWinnerAurelie || isWinnerManon) {
+                            // Attend que le premier son se termine puis joue ChristmasAll
+                            audio.addEventListener('ended', () => {
+                                setTimeout(() => {
+                                    const finalAudio = new Audio(
+                                        '/sounds/ChristmasAll.mp3'
+                                    )
+                                    finalAudio.volume = 0.5
+                                    finalAudio.play().catch(console.warn)
+                                }, 200) // Petite pause entre les deux sons
+                            })
+                        }
+                    }
+                }
+            } catch (error) {
+                console.warn('Impossible de lire le son:', error)
+            }
+        }
+
+        playSequentialAudio()
 
         // Animation d'entrée
         setAnimationClass('animate-winner-celebration')
@@ -109,8 +220,13 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
                                 Le grand gagnant est
                             </p>
 
-                            <div className='bg-gradient-to-br from-red-50 to-green-50 dark:from-red-950/20 dark:to-green-950/20 p-6 md:p-8 rounded-2xl border border-festive-accent/30 dark:border-slate-600 shadow-sm'>
-                                <div className='text-2xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 tracking-wide flex items-center justify-center gap-3'>
+                            <div className='bg-gradient-to-br from-red-50 to-green-50 dark:from-red-950/20 dark:to-green-950/20 p-6 md:p-8 rounded-2xl border border-festive-accent/30 dark:border-slate-600 shadow-sm relative overflow-hidden'>
+                                {/* Ruban diagonal qui traverse la box */}
+                                <div className='absolute left-0 top-0 w-full h-full pointer-events-none'>
+                                    <div className='gift-ribbon'></div>
+                                </div>
+
+                                <div className='text-2xl md:text-4xl font-bold text-slate-800 dark:text-slate-100 tracking-wide flex items-center justify-center gap-3 relative z-0'>
                                     {winner.toUpperCase()}
                                 </div>
                             </div>
