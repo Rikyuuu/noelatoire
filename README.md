@@ -4,53 +4,70 @@ Une application moderne et festive pour organiser vos tirages au sort de Noël a
 
 ## 🚀 Fonctionnalités
 
--   **Interface moderne** avec thème de Noël élégant
+-   **Interface moderne** avec thème de Noël élégant et dégradés sophistiqués
 -   **Entièrement responsive** pour tous types d'appareils
--   **Animations fluides** et transitions soignées
+-   **Animations fluides** et transitions soignées (sans effets agressifs)
 -   **Effet de neige** lors de la révélation du gagnant
--   **Son de célébration** (fichier audio à ajouter)
--   **Tirage progressif** avec suspense croissant
--   **Partage des résultats** (sur navigateurs compatibles)
--   **Validation intelligente** des participants
+-   **Tirages successifs** avec élimination automatique des gagnants précédents
+-   **Validation unique des noms** en temps réel avec indicateurs visuels
+-   **Système audio personnalisé** avec Easter egg pour certains participants
+-   **Contrôle utilisateur** avec toggle pour activer/désactiver les fonctionnalités spéciales
+-   **Footer professionnel** avec informations développeur et versioning
+-   **Effets visuels élégants** avec rubans cadeaux pour les gagnants
+-   **Icônes modernes** avec la bibliothèque Lucide React
 
 ## 🎯 Comment utiliser
 
-1. **Choisir le nombre** : Sélectionnez entre 2 et 20 participants
-2. **Saisir les noms** : Remplissez les champs avec les noms des participants
-3. **Lancer le tirage** : Cliquez sur le bouton magique et découvrez le gagnant !
+1. **Choisir le nombre** : Sélectionnez entre 2 et 100 participants
+2. **Saisir les noms** : Remplissez les champs avec des noms uniques (validation en temps réel)
+3. **Configurer** : Activez ou désactivez l'Easter egg sonore selon vos préférences
+4. **Lancer le tirage** : Cliquez sur le bouton magique et découvrez le gagnant !
+5. **Tirages multiples** : Effectuez des tirages successifs en éliminant les gagnants précédents
 
 ## 🛠 Technologies
 
 -   **Next.js 15** avec App Router
 -   **React 19** avec TypeScript
--   **Tailwind CSS** pour le styling
--   **DaisyUI** pour les composants
--   **Animations CSS** personnalisées
+-   **Tailwind CSS** pour le styling avec variables CSS personnalisées
+-   **DaisyUI** pour les composants UI modernes
+-   **Lucide React** pour les icônes élégantes
+-   **Animations CSS** personnalisées et transitions subtiles
+-   **Système audio HTML5** avec gestion événementielle avancée
 
-## 🎨 Nouvelles fonctionnalités
+## 🎨 Nouvelles fonctionnalités v1.0.0
 
 ### Design & UX
 
--   Interface avec dégradés et effets glass
--   Thème de Noël avec couleurs festives
--   Animations de célébration pour le gagnant
--   Indicateurs de progression visuels
+-   Interface avec dégradés et effets glass modernisés
+-   Thème de Noël sophistiqué avec palette de couleurs harmonieuse
+-   Animations de célébration élégantes pour les gagnants
+-   Ruban cadeau visuel avec effets CSS réalistes
+-   Footer professionnel avec crédits développeur et versioning
+-   Icônes Lucide remplaçant les émojis pour une apparence moderne
 -   Responsive design optimisé mobile/desktop
+
+### Fonctionnalités avancées
+
+-   **Tirages successifs** : Elimination automatique des gagnants précédents
+-   **Validation unique** : Détection en temps réel des noms en doublon
+-   **Indicateurs visuels** : Icônes de conflit (❌) et couronnes pour les gagnants
+-   **Limite étendue** : Jusqu'à 100 participants (vs 20 précédemment)
+-   **État visuel** : Champs verrouillés pendant les phases de tirage
+
+### Système Audio & Easter Egg
+
+-   **Audio personnalisé** pour certaines combinaisons de participants
+-   **Lecture séquentielle** sophistiquée avec gestion d'événements
+-   **Support des variantes** de noms avec/sans accents
+-   **Toggle de contrôle** pour activer/désactiver les fonctionnalités spéciales
+-   **Logique conditionnelle** complexe pour différents scénarios de tirages
 
 ### Animations
 
--   Effet de neige amélioré avec variations
--   Animation de tirage en 3 phases (rapide → lent → final)
--   Confettis animés lors de la révélation
--   Transitions fluides entre les étapes
-
-### Fonctionnalités
-
--   Validation en temps réel des champs
--   Compteur de participants valides
--   Boutons de partage et nouveau tirage
--   Son de célébration automatique
--   Gestion d'erreurs améliorée
+-   Effet de neige amélioré avec variations naturelles
+-   Animation de tirage en 3 phases fluides (rapide → lent → final)
+-   Transitions subtiles sans effets agressifs
+-   Fade-in/fade-out élégants pour les changements d'état
 
 ## 🚀 Installation et démarrage
 
@@ -93,11 +110,18 @@ src/
 
 ## 🎵 Fichiers audio
 
-Pour une expérience complète, ajoutez un fichier audio de Noël :
+Pour une expérience complète, l'application inclut plusieurs fichiers audio :
 
--   Créez le dossier `public/sounds/`
--   Ajoutez votre fichier `christmas2.mp3`
--   Le son se jouera automatiquement lors de la révélation du gagnant
+-   `public/sounds/christmas2.mp3` - Son par défaut de célébration
+-   `public/sounds/ChristmasAurelie.mp3` - Audio personnalisé (Easter egg)
+-   `public/sounds/ChristmasManon.mp3` - Audio personnalisé (Easter egg)
+-   `public/sounds/ChristmasAll.mp3` - Audio finale pour certains scénarios
+
+Le système audio intelligent :
+-   Détecte automatiquement certaines combinaisons de participants
+-   Joue des sons personnalisés selon les noms présents
+-   Supporte la lecture séquentielle (son personnel → son finale)
+-   Peut être désactivé via le toggle Easter egg
 
 ## 📱 Compatibilité
 
@@ -110,10 +134,11 @@ Pour une expérience complète, ajoutez un fichier audio de Noël :
 
 Parfait pour :
 
--   Tirages au sort de Noël en famille
--   Événements d'entreprise de fin d'année
--   Fêtes et animations festives
--   Distribution de cadeaux et surprises
+-   **Tirages au sort de Noël** en famille ou entre amis
+-   **Événements d'entreprise** de fin d'année avec tirages multiples
+-   **Fêtes et animations festives** avec gestion de groupes importants
+-   **Distribution de cadeaux** avec élimination progressive des gagnants
+-   **Animations spéciales** avec Easter eggs personnalisés pour vos proches
 
 ## 🔧 Personnalisation
 

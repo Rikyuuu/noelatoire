@@ -153,7 +153,8 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
         }, 5000)
 
         return () => clearTimeout(confettiTimer)
-    }, [winner, easterEggEnabled, participants, previousWinners, remainingParticipants])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [winner]) // seul "winner" doit redéclencher l'audio don désactive eslint
 
     if (!winner) {
         return (
